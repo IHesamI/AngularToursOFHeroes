@@ -15,6 +15,17 @@ export class HeroesComponent {
   constructor(private heroservice:HeroService,
               private messageService:MessageService){
   }
+  delete(hero:Hero):void{
+    this.heroes=this.heroes.filter(h=>h.id !== hero.id)
+    this.heroservice.deleteHero(hero.id).subscribe()
+  }
+  add(name:string):void{
+    name=name.trim()
+    if (!name){return ;}
+      this.heroservice.add(  {name} as Hero).subscribe(hero => {
+      this.heroes.push(hero);
+    })
+  }
   ngOnInit():void{
     this.getHeroes();
   }
